@@ -1,0 +1,11 @@
+1. Prepare class - containing ifstream - with methods that enables user to:
+  - Read N last lines of file. - Done!
+  - Read whole file
+  - Read only NEW lines that were apended to a file in time from previos 
+    read. - Done!
+
+
+2. Prepare a class thaw will contain unordered map or a vector of classes
+   from point 1. And connecting them with module names.
+
+
