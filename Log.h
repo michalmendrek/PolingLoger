@@ -3,14 +3,15 @@
 #include <fstream>
 #include <string>
 
-class MLlog {
+class Log {
  private:
   std::ifstream File;
   ssize_t LastEnd;
-   int GetLineNumber();
+  int GetLineNumber();
+
  public:
-  MLlog(std::string FileName);
-  ~MLlog();
+  Log(std::string FileName);
+  ~Log();
   std::string ReadNewLines();
   std::string ReadNLastLinesOfFile(int num);
   std::string ReadWholeLogFile();

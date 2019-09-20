@@ -1,7 +1,7 @@
 #include <Log.h>
 #include <iostream>
 
-MLlog::MLlog(std::string FileName) {
+Log::Log(std::string FileName) {
   File.open(FileName, std::fstream::in);
   if (File.is_open()) {
     File.seekg(0, std::ios::end);
@@ -10,9 +10,9 @@ MLlog::MLlog(std::string FileName) {
   }
 }
 
-MLlog::~MLlog() { File.close(); }
+Log::~Log() { File.close(); }
 
-std::string MLlog::ReadNewLines() {
+std::string Log::ReadNewLines() {
   ssize_t NewEnd(0);
   ssize_t OldEnd(0);
   ssize_t DiffEnd(0);
@@ -26,17 +26,14 @@ std::string MLlog::ReadNewLines() {
     DiffEnd = NewEnd - LastEnd;
 
     if (DiffEnd > 0) {
-      //std::cout << "File has new data" << std::endl;
-      //std::cout << "Length of new data : " << DiffEnd << std::endl;
       File.seekg(-DiffEnd, std::ios::end);
       char *array = new char[DiffEnd];
       File.read(array, DiffEnd);
       std::string Output(array);
-      delete []array;
+      delete[] array;
       DataFromFile = Output;
 
     } else {
-      //std::cout << "No new data" << std::endl;
       DataFromFile.clear();
     }
     LastEnd = NewEnd;
@@ -45,7 +42,7 @@ std::string MLlog::ReadNewLines() {
   return DataFromFile;
 }
 
-std::string MLlog::ReadNLastLinesOfFile(int num) {
+std::string Log::ReadNLastLinesOfFile(int num) {
   int LineNumber = GetLineNumber();
   std::cout << "Len of total file: " << LineNumber << std::endl;
   int tmp(0);
@@ -63,7 +60,7 @@ std::string MLlog::ReadNLastLinesOfFile(int num) {
   return out_string;
 }
 
-int MLlog::GetLineNumber() {
+int Log::GetLineNumber() {
   int number(0);
   std::string unused;
   if (File.is_open()) {
@@ -77,7 +74,7 @@ int MLlog::GetLineNumber() {
   return number;
 }
 
-std::string MLlog::ReadWholeLogFile() {
+std::string Log::ReadWholeLogFile() {
   std::string OutputData;
   std::string LineOfData;
   if (File.is_open()) {
