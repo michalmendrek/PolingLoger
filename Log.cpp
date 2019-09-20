@@ -32,6 +32,7 @@ std::string MLlog::ReadNewLines() {
       char *array = new char[DiffEnd];
       File.read(array, DiffEnd);
       std::string Output(array);
+      delete []array;
       DataFromFile = Output;
 
     } else {

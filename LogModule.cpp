@@ -12,7 +12,7 @@ MLlogModule::MLlogModule(std::string PathLog) {
 MLlogModule::~MLlogModule() {}
 
 void MLlogModule::AddModule(std::string Name) {
-  LogerContainer.push_back(
+  LogerContainer.emplace_back(
       std::make_tuple(Name, std::make_shared<MLlog>(Name + ".err.log"),
                       std::make_shared<MLlog>(Name + ".out.log")));
 }
