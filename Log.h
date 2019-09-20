@@ -8,6 +8,7 @@ class Log {
   std::ifstream File;
   ssize_t LastEnd;
   int GetLineNumber();
+  ssize_t GetLastEndFullLineAproach();
 
  public:
   Log(std::string FileName);

@@ -1,6 +1,7 @@
 #include <Log.h>
 #include <iostream>
 
+
 Log::Log(std::string FileName) {
   File.open(FileName, std::fstream::in);
   if (File.is_open()) {
@@ -12,26 +13,42 @@ Log::Log(std::string FileName) {
 
 Log::~Log() { File.close(); }
 
+ssize_t Log::GetLastEndFullLineAproach()
+{
+  unsigned int number(0);
+  ssize_t LastPos(0);
+  std::string unused;
+  if (File.is_open()) {
+    File.seekg(0, std::ios::beg);
+    while (std::getline(File, unused)) {
+      ++number;
+    }
+    File.clear();
+    LastPos=File.tellg();
+    File.clear();
+    File.seekg(0, std::ios::beg);
+  }
+  return LastPos;
+
+}
+
 std::string Log::ReadNewLines() {
   ssize_t NewEnd(0);
   ssize_t OldEnd(0);
   ssize_t DiffEnd(0);
   std::string DataFromFile;
-
+  std::string LineOfData;
   if (File.is_open()) {
     File.clear();
     File.seekg(0, std::ios::beg);
-    File.seekg(0, std::ios::end);
-    NewEnd = File.tellg();
+    NewEnd = GetLastEndFullLineAproach();
     DiffEnd = NewEnd - LastEnd;
 
     if (DiffEnd > 0) {
       File.seekg(-DiffEnd, std::ios::end);
-      char *array = new char[DiffEnd];
-      File.read(array, DiffEnd);
-      std::string Output(array);
-      delete[] array;
-      DataFromFile = Output;
+      while (std::getline(File, LineOfData)){
+      DataFromFile+=LineOfData;
+     }
 
     } else {
       DataFromFile.clear();
